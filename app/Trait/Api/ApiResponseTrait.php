@@ -7,7 +7,7 @@ trait ApiResponseTrait
     {
         $response = [
             'status' => $statusCode === 200,
-            'payload' => $data
+            'payload' => !array_key_exists('errors', $data) ? $data : [],
         ];
         if (array_key_exists('errors', $data)) {
             $response['errors'] = $data['errors'];

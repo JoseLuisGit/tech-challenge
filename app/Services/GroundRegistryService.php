@@ -24,7 +24,7 @@ class GroundRegistryService extends BaseService
     {
         $result = [];
         $validationRules = [
-            'zip_code' => 'required',
+            'zip_code' => 'required|integer',
             'type' => 'required|string|in:min,max,avg',
             'cve_vus' => 'required|string|in:A,C,E',
         ];
@@ -37,12 +37,11 @@ class GroundRegistryService extends BaseService
         if (!$this->hasErrors()) {
             // TODO: get municipality by request
             $municipality = $this->municipalityRepository->getByName(Municipality::ALVARO_OBREGON_MUNICIPALITY);
-            if (!isset($municipality)) {
-                $this->mergeErrors(['Municipality not found']);
-            } else {
+            $groundRegistries = collect([]);
+            if (isset($municipality)) {
                 $groundRegistries = $this->groundRegistryRepository->getByMunicipality($municipality, $data);
-                $result = $this->getPriceUnitResult($data['type'], $groundRegistries);
             }
+            $result = $this->getPriceUnitResult($data['type'], $groundRegistries);
         }
         return $result;
     }
