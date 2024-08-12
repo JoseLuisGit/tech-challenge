@@ -22,6 +22,8 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
       - name: Build Docker image
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
         run: |
           docker push $DOCKER_USER/tech-challenge:latest
 
