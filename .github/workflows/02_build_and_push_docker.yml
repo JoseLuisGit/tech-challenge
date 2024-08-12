@@ -25,8 +25,10 @@ jobs:
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
         run: |
-          docker push $DOCKER_USER/tech-challenge:latest
+          docker build -t $DOCKER_USER/tech-challenge:latest .
 
       - name: Push Docker image
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
         run: |
-          docker push $DOCKER_USER/tech-challenge
+          docker push $DOCKER_USER/tech-challenge:latest
