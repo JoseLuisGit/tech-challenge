@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Municipality extends Model
 {
+    const ALVARO_OBREGON_MUNICIPALITY = 'ALVARO OBREGON';
     use HasFactory;
 
     protected $table = 'municipalities';

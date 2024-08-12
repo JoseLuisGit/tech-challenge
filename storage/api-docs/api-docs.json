@@ -1,0 +1,42 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Ground Registry Price Unit",
+        "version": "1.0"
+    },
+    "paths": {
+        "/price-m2/zip-codes/{zip_code}/aggregate/{type}": {
+            "get": {
+                "operationId": "9f7de585c3a4cd4843d1460fd46c4b96",
+                "parameters": [
+                    {
+                        "name": "zip_code",
+                        "in": "path",
+                        "description": "Zip Code",
+                        "required": true
+                    },
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "Only min, max or avg",
+                        "required": true
+                    },
+                    {
+                        "name": "cve_vus",
+                        "in": "query",
+                        "description": "Only A, C or E",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "422": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        }
+    }
+}
