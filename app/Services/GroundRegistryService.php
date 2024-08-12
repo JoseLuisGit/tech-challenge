@@ -67,13 +67,11 @@ class GroundRegistryService extends BaseService
         $priceUnitConstructionEval = new PriceUnitEvaluation();
 
         $groundRegistries->each(function ($groundRegistry) use (&$priceUnitEval, &$priceUnitConstructionEval) {
-            if ($groundRegistry->ground_surface > 0) {
-                $priceUnit = ($groundRegistry->ground_value / $groundRegistry->ground_surface) - $groundRegistry->subsidy;
+            if ($groundRegistry->ground_surface > 0 && $groundRegistry->construction_surface > 0) {
+                $priceUnit = ((float) $groundRegistry->ground_value / (float) $groundRegistry->ground_surface) - (float) $groundRegistry->subsidy;
                 $priceUnitEval->addPriceUnit($priceUnit);
-
-                $priceUnitConstruction = ($groundRegistry->construction_surface / $groundRegistry->ground_surface) - $groundRegistry->subsidy;
+                $priceUnitConstruction = ((float) $groundRegistry->ground_value / (float) $groundRegistry->construction_surface) - (float) $groundRegistry->subsidy;
                 $priceUnitConstructionEval->addPriceUnit($priceUnitConstruction);
-
             } else {
                 Log::warning("The groud surface for ground registry id $groundRegistry->id/$groundRegistry->street_number is empty");
             }
