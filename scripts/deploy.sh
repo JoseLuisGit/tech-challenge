@@ -4,4 +4,4 @@ ssh -o StrictHostKeyChecking=no ${AWS_EC2_USER}@${AWS_EC2_HOST} docker run -d \
           -v ./.env:/app/.env \
           --restart unless-stopped \
           --name ${DEPLOYMENT_CONTAINER_NAME}  \
-          ${DEPLOYMENT_CONTAINER_NAME}:${DEPLOYMENT_IMAGE_TAG}
+          ${DEPLOYMENT_CONTAINER}:${DEPLOYMENT_IMAGE_TAG}
