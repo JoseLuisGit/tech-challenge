@@ -1,0 +1,50 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+
+env:
+  AWS_EC2_HOST: ${{ secrets.AWS_EC2_HOST }}
+  AWS_EC2_USER: ${{ secrets.AWS_EC2_USER }}
+  DEPLOYMENT_CONTAINER_NAME: ${{ vars.DEPLOYMENT_CONTAINER_NAME }}
+  DEPLOYMENT_IMAGE_TAG: ${{ vars.DEPLOYMENT_IMAGE_TAG }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Make env file
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_APP_NAME: ${{ vars.APP_NAME }}
+          envkey_APP_ENV: production
+          envkey_APP_KEY: ${{ secrets.APP_KEY }}
+          envkey_APP_DEBUG: ${{ vars.APP_DEBUG }}
+          envkey_APP_URL: ${{ secrets.AWS_EC2_HOST }}
+          envkey_DB_CONNECTION: ${{ vars.DB_CONNECTION }}
+          envkey_DB_HOST: ${{ vars.DB_HOST }}
+          envkey_DB_PORT: ${{ vars.DB_PORT }}
+          envkey_DB_DATABASE: ${{ vars.DB_DATABASE }}
+          envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          file_name: .env
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.AWS_SSH_PRIVATE_KEY  }}
+      - name: Docker Pull
+        run: |
+          bash ./scripts/docker_pull.sh
+
+      - name: Docker Stop and Remove
+        run: |
+          bash ./scripts/docker_stop_and_remove.sh
+
+      - name: Deploy
+        run: |
+          bash ./scripts/deploy.sh
