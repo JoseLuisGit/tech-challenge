@@ -2,12 +2,29 @@ name: Deployment
 
 on:
   workflow_dispatch:
+    inputs:
+      migrate:
+        description: "Run migrations"
+        type: choice
+        required: false
+        default: "true"
+        options:
+          - "true"
+          - "false"
+      seed:
+        description: "Run seeds"
+        type: choice
+        required: false
+        default: "false"
+        options:
+          - "true"
+          - "false"
 
 env:
   AWS_EC2_HOST: ${{ secrets.AWS_EC2_HOST }}
   AWS_EC2_USER: ${{ secrets.AWS_EC2_USER }}
+  DOCKER_USER: ${{ secrets.DOCKER_USER }}
   DEPLOYMENT_CONTAINER_NAME: ${{ vars.DEPLOYMENT_CONTAINER_NAME }}
-  DEPLOYMENT_CONTAINER: ${{ vars.DEPLOYMENT_CONTAINER }}
   DEPLOYMENT_IMAGE_TAG: ${{ vars.DEPLOYMENT_IMAGE_TAG }}
 
 jobs:
@@ -46,3 +63,11 @@ jobs:
 
       - name: Deploy
         run: bash ./scripts/deploy.sh
+
+      - name: Run migrations
+        if: ${{ github.event.inputs.migrate == 'true' }}
+        run: bash ./scripts/migrate.sh
+      
+      - name: Run seeds
+        if: ${{ github.event.inputs.seed == 'true' }}
+        run: bash ./scripts/seeds.sh
