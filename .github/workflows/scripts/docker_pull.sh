@@ -1,0 +1,1 @@
+ssh -o StrictHostKeyChecking=no ${AWS_EC2_USER}@${AWS_EC2_HOST} docker pull ${DEPLOYMENT_CONTAINER_NAME}:${DEPLOYMENT_IMAGE_TAG}
