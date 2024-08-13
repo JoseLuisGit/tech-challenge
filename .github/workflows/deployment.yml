@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Make env file
-        uses: SpicyPizza/create-envfile@v1
+        uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_APP_NAME: ${{ vars.APP_NAME }}
           envkey_APP_ENV: production
@@ -38,16 +38,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.AWS_SSH_PRIVATE_KEY  }}
       - name: Docker Pull
-        run: |
-          chmod +x "${GITHUB_WORKSPACE}/scripts/docker_pull.sh"
-          "${GITHUB_WORKSPACE}/scripts/docker_pull.sh"
+        run: bash ./scripts/docker_pull.sh
 
       - name: Docker Stop and Remove
-        run: |
-          chmod +x "${GITHUB_WORKSPACE}/scripts/docker_stop_and_remove.sh"
-          "${GITHUB_WORKSPACE}/scripts/docker_stop_and_remove.sh"
+        run: bash ./scripts/docker_stop_and_remove.sh
 
       - name: Deploy
-        run: |
-          chmod +x "${GITHUB_WORKSPACE}/scripts/deploy.sh"
-          "${GITHUB_WORKSPACE}/scripts/deploy.sh"
+        run: bash ./scripts/deploy.sh
