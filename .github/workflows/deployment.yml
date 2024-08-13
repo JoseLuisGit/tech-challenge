@@ -39,12 +39,15 @@ jobs:
           ssh-private-key: ${{ secrets.AWS_SSH_PRIVATE_KEY  }}
       - name: Docker Pull
         run: |
-          bash ./scripts/docker_pull.sh
+          chmod +x "${GITHUB_WORKSPACE}/scripts/docker_pull.sh"
+          "${GITHUB_WORKSPACE}/scripts/docker_pull.sh"
 
       - name: Docker Stop and Remove
         run: |
-          bash ./scripts/docker_stop_and_remove.sh
+          chmod +x "${GITHUB_WORKSPACE}/scripts/docker_stop_and_remove.sh"
+          "${GITHUB_WORKSPACE}/scripts/docker_stop_and_remove.sh"
 
       - name: Deploy
         run: |
-          bash ./scripts/deploy.sh
+          chmod +x "${GITHUB_WORKSPACE}/scripts/deploy.sh"
+          "${GITHUB_WORKSPACE}/scripts/deploy.sh"
