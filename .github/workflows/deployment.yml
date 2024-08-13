@@ -21,7 +21,7 @@ on:
           - "false"
 
 env:
-  AWS_EC2_HOST: ${{ secrets.AWS_EC2_HOST }}
+  AWS_EC2_HOST: ${{ vars.AWS_EC2_HOST }}
   AWS_EC2_USER: ${{ secrets.AWS_EC2_USER }}
   DOCKER_USER: ${{ secrets.DOCKER_USER }}
   DEPLOYMENT_CONTAINER_NAME: ${{ vars.DEPLOYMENT_CONTAINER_NAME }}
@@ -42,7 +42,7 @@ jobs:
           envkey_APP_ENV: production
           envkey_APP_KEY: ${{ secrets.APP_KEY }}
           envkey_APP_DEBUG: ${{ vars.APP_DEBUG }}
-          envkey_APP_URL: ${{ secrets.AWS_EC2_HOST }}
+          envkey_APP_URL: ${{ vars.AWS_EC2_HOST }}
           envkey_DB_CONNECTION: ${{ vars.DB_CONNECTION }}
           envkey_DB_HOST: ${{ vars.DB_HOST }}
           envkey_DB_PORT: ${{ vars.DB_PORT }}
