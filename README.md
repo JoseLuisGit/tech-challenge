@@ -42,6 +42,7 @@ Currently, an AWS EC2 instance is configured
 ## Actions
 - Test execution
 - Build and upload the docker image to a public repository
+- Trigger manual deployment to AWS EC2
 
 ## For Improvement
 - Versioning of docker images
