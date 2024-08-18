@@ -7,7 +7,7 @@ use App\Services\GroundRegistryService;
 use Illuminate\Http\Request;
 
 /**
- * @OA\Info(title="Ground Registry Price Unit", version="1.0")
+ * @OA\Info(title="This is a Ground Price unit", version="1.0")
  */
 class GroundRegistryController extends Controller
 {
